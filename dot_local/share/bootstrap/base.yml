@@ -1,0 +1,27 @@
+---
+- name: Machine setup - Base
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Upgrade all packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+  
+    - name: Install base packages
+      dnf:
+        name:
+          - git
+          - micro
+          - fzf
+          - tmux
+          - sqlite
+          - net-tools
+          - python3-pip
+          - python3-virtualenv
+          - pass
+          - pass-otp
+        state: present
+        update_cache: True
