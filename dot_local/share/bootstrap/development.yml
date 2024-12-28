@@ -24,6 +24,17 @@
           - docker-ce
           - docker-ce-cli
 
+    - name: Install extended packages - Developer Apps
+      dnf:
+        name:
+          - gummi
+
+    - name: Install extended packages - Tools
+      dnf:
+        name:
+          - feh
+
+
     - name: Install extended  packages - Desktop Environment
       dnf:
         name:
@@ -31,3 +42,9 @@
           - waybar
         state: present
         update_cache: True
+
+    - name: Group management - Adding existing user 'pidgey' to group 'libvirt'
+      user:
+        name: 'pidgey'
+        groups: libvirt
+        append: yes
