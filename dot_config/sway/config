@@ -34,6 +34,10 @@ bindsym $alt+d                exec $menu
 bindsym $alt+Shift+q          kill
 bindsym $win+l                exec $lock
 
+bindsym $alt+Shift+p          exec ~/.local/bin/desktop-commands/scratch-python
+bindsym $alt+Shift+m          exec scratch-music
+bindsym $win+k                exec kana
+
 # #---Bindings: Functions---# #
 mode "resize" {
         bindsym $left       resize grow left 10px;  resize shrink right 10px;
@@ -139,8 +143,10 @@ bindsym $alt+r                   mode "resize"
 bindsym $alt+Shift+r             reload
 bindsym $alt+Shift+e             exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
-
-include section-looks
+# #======
+# #===Section: Looks===# #
+# #======
+output * background "$(~/.local/bin/desktop-commands/set-wallpaper)" fill
 
 # #======
 # #===Section: Input===# #
