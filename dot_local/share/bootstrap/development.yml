@@ -1,0 +1,33 @@
+---
+- name: Machine setup - Base
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Upgrade all packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+
+    - name: Add the Docker repo
+      get_url:
+        url: https://download.docker.com/linux/fedora/docker-ce.repo
+        dest: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install extended packages - Virtualization
+      dnf:
+        name:
+          - "@virtualization"
+          - gnome-boxes
+          - virt-manager
+          - docker-ce
+          - docker-ce-cli
+
+    - name: Install extended  packages - Desktop Environment
+      dnf:
+        name:
+          - sway
+          - waybar
+        state: present
+        update_cache: True
