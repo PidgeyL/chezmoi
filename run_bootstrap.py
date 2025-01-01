@@ -14,9 +14,6 @@ import sys
 import termios
 import tty
 
-from shutil import which
-
-
 _HOME_     = os.getenv("HOME")
 _CONF_DIR_ = os.path.join(_HOME_, ".local", "share", "bootstrap")
 _CONF_     = os.path.join(_CONF_DIR_, "config.json")
@@ -31,11 +28,6 @@ _SETTINGS  = {
                   'input': {
                       'keyboard': ''}
              }
-
-def ensure_ansible():
-    if not which("ansible-playbook"):
-        script = "~/.local/share/chezmoi/run_once_install_ansible.sh"
-        subprocess.run(['sh', script], check=True)
 
 
 def confirm(text):
@@ -91,7 +83,6 @@ def bootstrap(settings):
         subprocess.run(['ansible-playbook', file, "--ask-become-pass"], check=True)
 
 if __name__ == "__main__":
-    ensure_ansible()
     interact_settings()
     settings = read_settings()
     bootstrap(settings)

@@ -23,11 +23,23 @@
           - virt-manager
           - docker-ce
           - docker-ce-cli
+        state: present
+        update_cache: True
 
     - name: Install extended packages - Developer Apps
       dnf:
         name:
           - gummi
+        state: present
+        update_cache: True
+
+    - name: Install extended packages - Terminal Apps & Tools
+      dnf:
+        name:
+          - ncmpcpp
+          - feh
+        state: present
+        update_cache: True
 
     - name: Install extended packages - Development Tools
       dnf:
@@ -36,11 +48,8 @@
           - gcc
           - fontconfig-devel # Requirement for st
           - libXft-devel     # Requirement for st
-
-    - name: Install extended packages - Tools
-      dnf:
-        name:
-          - feh
+        state: present
+        update_cache: True
 
     - name: Install extended  packages - Desktop Environment
       dnf:
