@@ -23,8 +23,9 @@ _SETTINGS  = {
                       'base': False,
                       'workstation': False,
                       'server': False,
-                      'development': False,
-                  }
+                      'development': False},
+                  'input': {
+                      'keyboard': ''}
              }
 
 def confirm(text):
@@ -50,10 +51,13 @@ def do_bootstrap(text, setting):
 def interact_settings():
     if os.path.exists(_CONF_):
         return
+    print("Creating config file:")
     do_bootstrap("Base system", 'base')
     do_bootstrap("Workstation", 'workstation')
     do_bootstrap("Server",      'server')
     do_bootstrap("Development", 'development')
+    code = input("[SETTINGS] Preferred keyboard layout code: ")
+    _SETTINGS['input']['keyboard'] = code
     with open(_CONF_, 'w') as f:
         f.write(json.dumps(_SETTINGS))
 

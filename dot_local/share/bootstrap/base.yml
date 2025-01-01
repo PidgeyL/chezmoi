@@ -9,7 +9,7 @@
       ansible.builtin.dnf:
         name: "*"
         state: latest
-  
+
     - name: Install base packages
       dnf:
         name:

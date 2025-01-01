@@ -29,11 +29,18 @@
         name:
           - gummi
 
+    - name: Install extended packages - Development Tools
+      dnf:
+        name:
+          - make
+          - gcc
+          - fontconfig-devel # Requirement for st
+          - libXft-devel     # Requirement for st
+
     - name: Install extended packages - Tools
       dnf:
         name:
           - feh
-
 
     - name: Install extended  packages - Desktop Environment
       dnf:
@@ -43,8 +50,30 @@
         state: present
         update_cache: True
 
+    - name: Get & install st terminal
+      ansible.builtin.shell: |
+        cd {{ repo_dir }}
+        if [ ! -f {{ target_binary }} ]; then
+          git clone {{ repo_url }} repo || (cd repo && git pull)
+          cd repo
+          make install
+        fi
+        rm -rf {{ repo_dir }}/repo
+      args:
+        chdir: "{{ repo_dir }}"
+      vars:
+        repo_url: 'https://github.com/pidgeyl/st.git'
+        repo_dir: '/tmp'
+        target_binary: '/usr/bin/st'
+
     - name: Group management - Adding existing user 'pidgey' to group 'libvirt'
       user:
         name: 'pidgey'
         groups: libvirt
+        append: yes
+
+    - name: Group management - Adding existing user 'pidgey' to group 'docker'
+      user:
+        name: 'pidgey'
+        groups: docker
         append: yes
