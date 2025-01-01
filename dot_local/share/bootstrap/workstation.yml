@@ -1,5 +1,5 @@
 ---
-- name: Machine setup - Base
+- name: Machine setup - Workstation
   hosts: localhost
   become: true
   connection: local

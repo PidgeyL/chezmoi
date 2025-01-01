@@ -1,0 +1,23 @@
+---
+- name: Machine setup - Work Workstation
+  hosts: localhost
+  become: true
+  connection: local
+  gather_facts: true
+  tasks:
+    - name: Upgrade all packages
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+
+    - name: Install extended packages - Desktop Apps
+      dnf:
+        name:
+          - evolution
+          - evolution-ews
+        state: present
+        update_cache: True
+
+    - name: Autoremove unneeded packages installed as dependencies
+      ansible.builtin.dnf:
+        autoremove: yes
