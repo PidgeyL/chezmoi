@@ -89,3 +89,16 @@
         name: 'pidgey'
         groups: docker
         append: yes
+
+    - name: Make required mpd libraries
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: pidgey
+        group: pidgey
+        mode: 0750
+      loop:
+        - /home/pidgey/.local/share/mpd
+        - /home/pidgey/.local/share/mpd/playlists
+        - /home/pidgey/.local/share/lyrics
+        - /home/pidgey/.local/state/mpd
