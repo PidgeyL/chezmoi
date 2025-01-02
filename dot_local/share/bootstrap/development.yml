@@ -37,6 +37,8 @@
       dnf:
         name:
           - ncmpcpp
+          - mpd
+          - mpc
           - feh
         state: present
         update_cache: True
@@ -46,6 +48,7 @@
         name:
           - make
           - gcc
+          - patch
           - fontconfig-devel # Requirement for st
           - libXft-devel     # Requirement for st
         state: present
