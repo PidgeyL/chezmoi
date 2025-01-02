@@ -1,0 +1,17 @@
+#!/bin/sh
+
+source <(grep "export TERMINAL" .bashrc)
+CLASS="scratch-python"
+
+running=$(ps aux | grep -- "-c $CLASS" | grep -v grep)
+if [ -z "${running}" ]; then
+    $TERMINAL -c "$CLASS" -T "$CLASS" -e "python3" "-q" &
+    until swaymsg -t get_tree | jq -r ".. | objects | select(.class == \"$CLASS\")" | grep -q "$CLASS"
+    do
+        sleep 0.1
+    done
+    swaymsg "[class=\"$CLASS\"]" move scratchpad > /dev/null
+fi
+
+swaymsg "[class=\"$CLASS\"]" scratchpad show > /dev/null
+swaymsg "[class=\"$CLASS\"]" move position center > /dev/null
