@@ -1,11 +1,12 @@
 #!/bin/sh
 
 source <(grep "export TERMINAL" ~/.bashrc)
-CLASS="scratch-python"
+source <(grep "export MUSIC"    ~/.bashrc)
+CLASS="scratch-music"
 
 running=$(ps aux | grep -- "-c $CLASS" | grep -v grep)
 if [ -z "${running}" ]; then
-    $TERMINAL -c "$CLASS" -T "$CLASS" -e "python3" "-q" &
+    $TERMINAL -c "$CLASS" -e "ncmpcpp" &
     until swaymsg -t get_tree | jq -r ".. | objects | select(.class == \"$CLASS\")" | grep -q "$CLASS"
     do
         sleep 0.1

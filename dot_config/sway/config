@@ -35,7 +35,7 @@ bindsym $alt+Shift+q          kill
 bindsym $win+l                exec $lock
 
 bindsym $alt+Shift+p          exec ~/.local/bin/desktop-commands/scratch-python
-bindsym $alt+Shift+m          exec scratch-music
+bindsym $alt+Shift+m          exec ~/.local/bin/desktop-commands/scratch-music
 bindsym $win+k                exec kana
 
 # #---Bindings: Functions---# #
