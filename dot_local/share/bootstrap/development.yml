@@ -61,6 +61,7 @@
         name:
           - sway
           - waybar
+          - network-manager-applet
         state: present
         update_cache: True
 
