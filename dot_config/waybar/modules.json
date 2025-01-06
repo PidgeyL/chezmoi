@@ -38,16 +38,35 @@
 	 
     },
     "cpu": {
-        "format": "  {usage}%",
-        "tooltip": true
+        "format-critical":  "<span color='#f06051'><b> {usage}%</b></span>",
+        "format-high":      "<span color='#ebcb8b'> {usage}%</span>",
+        "format-medium":    "<span color='#c3deac'> {usage}%</span>",
+        "format-low":       "<span> {usage}%</span>",
+        "tooltip": true,
+        "interval": 2,
+        "states": {
+            "critical": 80,
+            "high": 50,
+            "medium": 5,
+            "low": 0,
+        },
     },
     "memory": {
-        "format": "  {}%",
-	"tooltip": true
+        "format-critical":  "<span color='#f06051'><b> {}%</b></span>",
+        "format-high":      "<span color='#ebcb8b'> {}%</span>",
+        "format-medium":    "<span color='#c3deac'> {}%</span>",
+        "format-low":       "<span> {}%</span>",
+	    "tooltip": true,
+	    "states": {
+            "critical": 80,
+            "high": 50,
+            "medium": 20,
+            "low": 0,
+        },
     },
     "temperature": {
         "interval": 10,
-        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input",
+        "hwmon-path": "/sys/devices/platform/coretemp.0/hwmon/hwmon9/temp1_input",
         "critical-threshold": 100,
         "format-critical": " {temperatureC}",
         "format": " {temperatureC}°C"
@@ -69,6 +88,28 @@
         "format": "{:%H:%M | %e %B} ",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
+    },
+    "mpd": {
+        "format": "{stateIcon} {randomIcon}{repeatIcon}{singleIcon} {filename}",
+        "format-disconnected": "Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "interval": 2,
+        "server": "/home/pidgey/.local/state/mpd/socket",
+        "on-click": "mpc --host ~/.local/state/mpd/socket toggle",
+        "random-icons": {
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "{title} by {artist} [{album}]\n\n{elapsedTime:%M:%S} / {totalTime:%M:%S}",
+        "tooltip-format-disconnected": "MPD (disconnected)"
     }
-
 }

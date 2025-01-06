@@ -10,20 +10,32 @@
         "sway/workspaces"
     ],
     "modules-center": [
-        "sway/window"
+        "mpd"
     ],
     "modules-right": [
         "pulseaudio",
         "network",
-        "cpu",
-        "memory",
-        "temperature",
         "battery",
         "clock",
-        "tray"
+        "group/overflow"
     ],
+    // Drawers
+    "group/overflow": {
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "not-power",
+            "transition-left-to-right": true,
+            "click-to-reveal": true,
+        },
+        "orientation": "horizontal",
+        "modules": [
+            "cpu",
+            "memory",
+            "temperature",
+            "tray"
+        ]
+    },
     //Modules configuration
-
     "include": [
 		"~/.config/waybar/modules.json"
 	]
