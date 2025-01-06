@@ -39,7 +39,9 @@
           - ncmpcpp
           - mpd
           - mpc
+          - yt-dlp
           - feh
+          - tldr
         state: present
         update_cache: True
 

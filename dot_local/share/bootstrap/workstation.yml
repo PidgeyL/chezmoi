@@ -39,6 +39,13 @@
           - libreoffice
           - vlc
 
+    - name: Install extended  packages - Encodings
+      dnf:
+        name:
+          - libde265
+          - x265-libs
+          - libavcodec-freeworld
+
     - name: Autoremove unneeded packages installed as dependencies
       ansible.builtin.dnf:
         autoremove: yes
