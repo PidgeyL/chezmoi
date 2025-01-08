@@ -14,8 +14,9 @@ else
     wallpaper="${HOME}/.local/share/wallpapers/"$(echo "$wallpapers" | shuf -n 1)
 fi
 if ! [ -z $(echo "$@" | grep "lock") ]; then
-    resolution=$(xrandr | grep "*" | cut -f4 -d' ')
-    convert "$wallpaper" "${HOME}/.local/share/i3lock/lock.png" -gravity center -composite -matte -scale ${resolution} /tmp/i3lock.png
+    lock_height=$(identify -format "%h / 2.25\n" "$wallpaper" | bc)
+    magick composite \( -resize "${lock_height}" "${HOME}/.local/share/i3lock/lock.png" \)  \
+        "$wallpaper" -gravity center /tmp/i3lock.png
     wallpaper="/tmp/i3lock.png"
 fi
 echo "$wallpaper"
