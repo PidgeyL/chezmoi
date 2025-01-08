@@ -38,6 +38,7 @@
           - keepassxc
           - libreoffice
           - vlc
+          - gimp
 
     - name: Install extended  packages - Encodings
       dnf:
