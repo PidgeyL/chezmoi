@@ -41,3 +41,15 @@
     - name: Autoremove unneeded packages installed as dependencies
       ansible.builtin.dnf:
         autoremove: yes
+
+    - name: Set permissions on folders
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: pidgey
+        group: pidgey
+        mode: 0700
+      loop:
+        - /home/pidgey/.gnupg
+        - /home/pidgey/.ssh
+        - /home/pidgey/.password-store
