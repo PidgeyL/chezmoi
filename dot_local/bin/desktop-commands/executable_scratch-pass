@@ -1,0 +1,19 @@
+#!/bin/sh
+
+FULLPATH="${HOME}/.local/bin/tools/fzf-pass"
+
+source <(grep "export TERMINAL" ~/.bashrc)
+CLASS="scratch-pass"
+
+running=$(ps aux | grep -- "-c $CLASS" | grep -v grep)
+if [ -z "${running}" ]; then
+    $TERMINAL -c "$CLASS" -T "$CLASS" -e "$FULLPATH" &
+    until swaymsg -t get_tree | jq -r ".. | objects | select(.class == \"$CLASS\")" | grep -q "$CLASS"
+    do
+        sleep 0.1
+    done
+    swaymsg "[class=\"$CLASS\"]" move scratchpad > /dev/null
+fi
+
+swaymsg "[class=\"$CLASS\"]" scratchpad show > /dev/null
+swaymsg "[class=\"$CLASS\"]" move position center > /dev/null

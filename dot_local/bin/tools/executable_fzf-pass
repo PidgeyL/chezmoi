@@ -1,0 +1,70 @@
+# #!/bin/bash
+
+CREDS_ORDER=("username.gpg" "password.gpg" "otp.gpg")
+ALL_ORDER=("url.gpg" "username.gpg" "password.gpg" "otp.gpg")
+
+function countdown() {
+    total_steps=$(("$2" * 10))
+    for ((i = 1; i <= total_steps; i++)); do
+    # Calculate the percentage of completion
+        percentage=$(( 100 - (i * 100) / total_steps ))
+        notify-send -h int:value:"$percentage" -a "scratch-pass" -u low "$1"
+        sleep 0.1
+    done
+}
+
+
+function show_entries() {
+    tree ~/.password-store/ -nif --noreport | grep -E "\.gpg" |
+        sed "s@$HOME/.password-store/@@; s%/[^/]*$%%" | uniq | fzf
+}
+
+function option_select() {
+    tree ~/.password-store/$1 -ni --noreport | tail -n +2 | (echo "all"; echo "creds"; cat -) | fzf
+}
+
+function copy_pass(){
+    if [ $2 = 'otp.gpg' ]; then
+        pass otp -c "${1}/${2::-4}"
+    else
+        pass -c "${1}/${2::-4}"
+    fi
+}
+
+function multi_copy(){
+    # Check if we're running inside scratch-pass, to hide the window upon copy
+    CLASS=$(swaymsg -t get_tree | jq -r '.. | objects | select(.focused == true) | .window_properties.class')
+    if [ "$CLASS" = 'scratch-pass' ]; then
+        # Copy the first entry, to unlock
+        copy_pass "$entry" "$@[0]"
+        # Then hide the window
+        swaymsg "[class=\"$CLASS\"]" scratchpad show > /dev/null
+    fi
+
+    for i in $@
+    do
+        tree ~/.password-store/$entry -ni --noreport | grep -q "$i"
+        if [ $? -eq 0 ]; then
+            copy_pass "$entry" "$i"
+            countdown "Coppied ${i::-4} to clipboard" 4
+            #notify-send -a "scratch-pass" -u low "Coppied ${i::-4} to clipboard"
+            #sleep 4
+        fi
+    done
+}
+
+
+function main() {
+    entry=$(show_entries);
+    option=$(option_select "$entry");
+    if [ $option = 'all' ]; then
+        multi_copy "${ALL_ORDER[@]}"
+    elif [ $option = 'creds' ]; then
+        multi_copy "${CREDS_ORDER[@]}"
+    else
+        copy_pass "$entry" "$option"
+    fi
+    
+}
+
+main

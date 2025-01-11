@@ -36,6 +36,7 @@ bindsym $win+l                exec $lock
 
 bindsym $alt+Shift+p          exec ~/.local/bin/desktop-commands/scratch-python
 bindsym $alt+Shift+m          exec ~/.local/bin/desktop-commands/scratch-music
+bindsym $win+Shift+p          exec ~/.local/bin/desktop-commands/scratch-pass
 bindsym $win+k                exec kana
 
 # #---Bindings: Functions---# #
@@ -153,6 +154,11 @@ output * background "$(~/.local/bin/desktop-commands/set-wallpaper)" fill
 # #======
 input type:keyboard xkb_numlock enabled
 exec_always python3 ~/.local/share/bootstrap/bootstrap.py keyboard sway
+
+# #======
+# #=== Autostart Applications
+# #======
+exec dunst
 
 # #======
 # #===Section: Bars===# #
