@@ -1,0 +1,84 @@
+# For defaults and description of each option, see the link bellow
+# https://github.com/dunst-project/dunst/blob/master/dunstrc
+
+[global]
+# Display
+follow               = keyboard
+indicate_hidden      = yes
+notification_limit   = 5
+sort                 = no
+hide_duplicate_count = false
+show_age_threshold   = 120
+
+# Window size & location
+width  = (250, 500)
+height = (0, 300)
+origin = top-right
+offset = (10, 0)
+
+# Window look
+transparency       = 5
+separator_height   = 2
+frame_width        = 2
+corner_radius      = 10
+padding            = 12
+horizontal_padding = 20
+
+# Colors
+foreground       = "#d5cce6"
+frame_color      = "#c0c0c0"
+highlight        = "#2274d5, #82aad9"
+separator_color  = "#c0c0c0"
+
+# Progress bar
+progress_bar               = true
+progress_bar_frame_width   = 0
+progress_bar_corner_radius = 3
+
+# Text & content
+font               = Noto Sans Mono 10
+markup             = full
+format             = "<b>%s</b>\n%b"
+alignment          = left
+vertical_alignment = center
+
+
+# Icon
+icon_position      = left
+min_icon_size      = 30
+max_icon_size      = 50
+icon_corner_radius = 4
+icon_theme         = breeze
+
+# Misc/Advanced
+dmenu = wofi --show drun --prompt 'Open with'
+
+
+# Mouse
+mouse_left_click   = close_current
+mouse_middle_click = close_all
+mouse_right_click  = do_action, close_current
+
+[urgency_low]
+background = "#313033"
+foreground = "#5e81ac"
+timeout    = 3
+
+[urgency_normal]
+background = "#313033"
+foreground = "#d5cce6"
+timeout    = 8
+
+[urgency_critical]
+background = "#313033"
+foreground = "#bf4c5c"
+timeout    = 0
+
+
+# Rules
+[fullscreen_delay_everything]
+fullscreen = delay
+
+[fullscreen_show_critical]
+msg_urgency = critical
+fullscreen = show
