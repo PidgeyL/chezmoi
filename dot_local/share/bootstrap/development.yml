@@ -30,6 +30,7 @@
           - docker-ce
           - docker-ce-cli
           - virtio-win
+          - swtpm
         state: present
         update_cache: True
 
@@ -70,6 +71,7 @@
           - sway
           - waybar
           - network-manager-applet
+          - pavucontrol
           - dunst
         state: present
         update_cache: True

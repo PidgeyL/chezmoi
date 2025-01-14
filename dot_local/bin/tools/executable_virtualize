@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Check if argument is provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 {kvm|virtualbox|vbox}"
+    exit 1
+fi
+
+# Get the argument value
+VIRTUALIZATION_TYPE=$1
+
+# Handle different virtualization types
+case "$VIRTUALIZATION_TYPE" in
+    kvm)
+        echo "Enabling KVM kernel modules."
+        sudo modprobe kvm
+        sudo modprobe kvm_intel
+        ;;
+    virtualbox|vbox)
+        echo "Disabling KVM kernel modules."
+        sudo modprobe -r kvm_intel
+        sudo modprobe -r kvm
+        ;;
+    *)
+        echo "Invalid argument. Please specify either 'kvm', 'virtualbox', or 'vbox'."
+        exit 1
+        ;;
+esac
