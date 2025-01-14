@@ -1,0 +1,18 @@
+#!/bin/sh
+
+OBSIDIAN_LOCATION="$HOME/.local/bin/appimages/"
+OBSIDIAN_NAME="Obsidian.AppImage"
+
+FILE="${OBSIDIAN_LOCATION}${OBSIDIAN_NAME}"
+
+# Test if obsidian appimage is present:
+if ! test -f $FILE; then
+    mkdir -p "$OBSIDIAN_LOCATION"
+    echo "Obsidian not present. Downloading AppImage..."
+    URL=$(curl -s https://api.github.com/repos/obsidianmd/obsidian-releases/releases/latest | 
+              jq -r '.assets[] | select (.name | contains("AppImage")) | .browser_download_url' | grep -v arm64)
+    curl -L --silent -o "${FILE}" "${URL}"
+    chmod +x "${FILE}"
+fi
+
+${FILE} &
