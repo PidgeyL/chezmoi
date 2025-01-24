@@ -144,16 +144,21 @@ bindsym $alt+r                   mode "resize"
 bindsym $alt+Shift+r             reload
 bindsym $alt+Shift+e             exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
+
 # #======
-# #===Section: Looks===# #
+# #===Section: Screens===# #
 # #======
+exec_always python3 ~/.local/share/bootstrap/bootstrap.py screens sway
 output * background "$(~/.local/bin/desktop-commands/set-wallpaper)" fill
+exec ~/.local/bin/desktop-commands/screen-timeout
+
 
 # #======
 # #===Section: Input===# #
 # #======
 input type:keyboard xkb_numlock enabled
 exec_always python3 ~/.local/share/bootstrap/bootstrap.py keyboard sway
+
 
 # #======
 # #=== Autostart Applications

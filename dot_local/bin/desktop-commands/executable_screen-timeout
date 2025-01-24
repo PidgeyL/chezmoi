@@ -1,0 +1,37 @@
+#!/bin/bash
+
+###
+# Settings
+dim_timeout=$((5*60))             # 5 minutes        - Dim screen
+off_timeout=$((15*60))            # 15 minutes       - Turn off screen
+lock_timeout=$(($off_timeout+10)) # 10 seconds later - Lock screen
+locker="swaylock -e -u -c 444444 -i $(~/.local/bin/desktop-commands/set-wallpaper lock)"
+command_name="screen-idle"
+
+###
+# Kill all previous swayidle's
+ps aux | grep "${command_name}" | grep -v grep | awk '{print $2}' | xargs kill
+
+
+###
+# SwayIdle Actions
+
+# Dim the screen after $dim_timeout of idle.
+( exec -a "$command_name" swayidle \
+    timeout $dim_timeout 'brightnessctl set  15%-' \
+    resume               'brightnessctl set +15%' ) &
+
+
+# Turn off the display after $off_timeout of idle.
+( exec -a "$command_name" swayidle \
+    timeout $off_timeout 'swaymsg "output * dpms off"' \
+    resume               'swaymsg "output * dpms on"' ) &
+
+# Lock screen after $lock_timeout of idle.
+( exec -a "$command_name" swayidle \
+    timeout $lock_timeout "$locker") &
+
+# If swaylock is running, turn off the screen after 30 seconds
+( exec -a "$command_name" swayidle \
+    timeout 10 'if pgrep swaylock; then swaymsg "output * dpms off"; fi' \
+    resume     'swaymsg "output * dpms on"') &

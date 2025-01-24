@@ -73,6 +73,7 @@
           - network-manager-applet
           - pavucontrol
           - dunst
+          - brightnessctl
         state: present
         update_cache: True
 
