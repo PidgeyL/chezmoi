@@ -166,6 +166,11 @@ exec_always python3 ~/.local/share/bootstrap/bootstrap.py keyboard sway
 exec dunst
 
 # #======
+# #=== Fix user variables in sway session
+# #======
+exec systemctl --user import-environment DISPLAY
+
+# #======
 # #===Section: Bars===# #
 # #=====
 bar {
