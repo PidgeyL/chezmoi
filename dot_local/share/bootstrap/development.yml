@@ -51,6 +51,7 @@
           - yt-dlp
           - feh
           - tldr
+          - zbar
         state: present
         update_cache: True
 
@@ -71,6 +72,7 @@
           - sway
           - waybar
           - network-manager-applet
+          - blueman
           - pavucontrol
           - dunst
           - brightnessctl
